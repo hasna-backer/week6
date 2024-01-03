@@ -15,8 +15,12 @@ let userLogin = function (req, res, next) {
 let loginSubmit = async (req, res, next) => {
   const { email, pass } = req.body;
   const isExist = await User.findOne({ email: email })
+
   if (isExist == null) {
+    console.log("is exist", isExist)
+
     req.flash('error', 'email is not registered');
+    res.redirect('/login')
   }
   else {
     const isPasswordMatch = await bcrypt.compare(pass, isExist.password)
@@ -47,7 +51,7 @@ let userSignup = function (req, res, next) {
 let register = async (req, res, next) => {
   const { name, email, pass, phone } = req.body
   const isExist = await User.findOne({ email: email })
-  console.log('is exist : ', isExist)
+  // console.log('is exist : ', isExist)
   if (isExist == null) {
     let user = new User();
     user.email = email
