@@ -1,7 +1,7 @@
 const User = require('../models/userModel');
 const bcrypt = require('bcrypt');
 
-
+// get login page
 let userLogin = function (req, res, next) {
   const err = req.flash('error')[0]
   if (req.session.user && req.session.user.isLoggedin) {
@@ -11,7 +11,7 @@ let userLogin = function (req, res, next) {
     res.render('login', { title: 'Express', error: err });
   }
 }
-
+//function for submit in login
 let loginSubmit = async (req, res, next) => {
   const { email, pass } = req.body;
   const isExist = await User.findOne({ email: email })
@@ -27,7 +27,7 @@ let loginSubmit = async (req, res, next) => {
     if (isPasswordMatch) {
       delete isExist.password;
       req.session.user = { user: isExist, isLoggedin: true }
-console.log("is exist", isExist)
+      console.log("is exist", isExist)
       res.render('home', { title: 'Express' });
 
     } else {
@@ -38,16 +38,18 @@ console.log("is exist", isExist)
   }
 
 }
-
+// home page
 let home = function (req, res, next) {
   res.render('home', { title: 'Express' });
 }
 
+//render signup page
 let userSignup = function (req, res, next) {
   const err = req.flash('error')[0]
   res.render('signup', { title: 'Express', error: err });
 }
 
+//function for submit in signup page
 let register = async (req, res, next) => {
   const { name, email, pass, phone } = req.body
   const isExist = await User.findOne({ email: email })
@@ -72,6 +74,7 @@ let register = async (req, res, next) => {
   }
 }
 
+//logout
 const logout = (req, res) => {
   req.session.destroy()
   res.redirect('/login')
