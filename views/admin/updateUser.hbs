@@ -1,0 +1,62 @@
+{{!-- header --}}
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap  shadow">
+    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="/">DASHBOARD</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
+        data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</header>
+{{!-- header --}}
+
+{{!-- <div class="container-fluid"> --}}
+    <h2 align="center" class="my-4">Update User</h2>
+
+    <div class="container">
+<p>{{error}}</p>
+        <div class="col p-5">
+            <div class="row">
+                <div class="col">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/admin">Database</a></li>
+                            <li class="breadcrumb-item active">{{user.name}}</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col text-end fw-lighter">
+                    <b>User Id</b>
+                </div>
+            </div>
+        </div>
+
+        {{!-- new user form --}}
+
+        <form action="/admin/updateUser/{{user._id}}" method="post">
+            <div class="form-outline mb-2">
+                <p class="form-label">Username</p>
+                <input type="text" id="username" class="form-control" value="{{user.name}}" placeholder="Enter a user name" name="username" />
+            </div>
+
+            <div class="form-outline mb-2">
+                <p class="form-label">Email</p>
+                <input type="email" id="email" class="form-control" value="{{user.email}}" placeholder="Enter a user name" name="email" />
+            </div>
+
+            
+
+            <div class="form-outline mb-2">
+                <p class="form-label">Phone no</p>
+                <input type="number" id="phno" class="form-control" value="{{user.phone}}" placeholder="Enter a user name" name="phno" />
+            </div>
+
+
+            <button type="submit" class="btn btn-primary ">Submit</button>
+        </form>
+    </div>
+
+    {{!-- new user form --}}
+
+
+
+
+</div>

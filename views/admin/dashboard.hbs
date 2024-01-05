@@ -91,6 +91,7 @@
                                         <tr class="table-success">
                                             <th scope="col" class="border-0 text-uppercase font-medium">Name</th>
                                             <th scope="col" class="border-0 text-uppercase font-medium">Email</th>
+                                            <th scope="col" class="border-0 text-uppercase font-medium">Phone no</th>
                                             <th scope="col" class="border-0 text-uppercase font-medium">Created on</th>
                                             <th scope="col" class="border-0 text-uppercase font-medium">Manage</th>
                                         </tr>
@@ -101,10 +102,12 @@
                                             {{!-- <th scope="row">1</th> --}}
                                             <td>{{this.name}}</td>
                                             <td>{{this.email}}</td>
+                                            <td>{{this.phone}}</td>
                                             <td>{{this.createdAt}}</td>
                                             <td>
-                                                <a href="/delete" class="btn btn-outline-danger py-0"> Delete</a>
-                                                <a href="/upsate" class="btn btn-outline-success py-0"> Update</a>
+                                                <a href="/admin/delete/{{this._id}}" data-id="{{this._id}}" class="btn btn-outline-danger py-0"
+                                                onclick="return confirm('Are you sure,You want to delete {{this.userName}}')" > Delete</a>
+                                                <a href="/admin/updateUser/{{this._id}}" class="btn btn-outline-success py-0"> Update</a>
 
                                             </td>
                                         </tr>

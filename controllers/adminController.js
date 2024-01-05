@@ -6,8 +6,8 @@ const bcrypt = require('bcrypt')
 
 //render dashboard
 let dashboard = async function (req, res, next) {
-  let userData = await User.find({})
-  console.log("user data:", userData);
+  let userData = await User.find({isBanned :{$ne : true}})
+  // console.log("user data:", userData);
   res.render('admin/dashboard', { title: 'Express', user: userData });
 }
 
@@ -48,8 +48,6 @@ let logout = (req, res, next) => {
 //render add user page
 let addUserGet = async (req, res, next) => {
   const err = req.flash('error')[0];
-  // const users = User.find()
-
   res.render('admin/addUser', { error: err })
 }
 
@@ -74,11 +72,60 @@ let addUserPost = async (req, res, next) => {
   }
 }
 
+const updateUserRender = async (req, res, next) => {
+  try {
+    const user = await User.findOne({ _id: req.params.id })
+    const err = req.flash('error')[0]
+    res.render('admin/updateUser', { user, error: err })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const updateUserSubmit = async (req, res, next) => {
+  // console.log("update user submit reached")
+  try {
+    const { username, email, phno } = req.body;
+    const userId = req.params.id;
+    const isExist = await User.findOne({ email: email, _id: { $ne: userId } })
+    if (isExist == null) {
+
+      // Update the existing user
+      const updatedUser = await User.updateOne(
+        { _id: userId }, { $set: { name: username, email: email, phone: phno } });
+      res.redirect('/admin')
+      console.log("hiiiiii if not exist")
+
+    }
+    else {
+      console.log("User already Exist")
+      req.flash('error', 'User already Exist!')
+      res.redirect(`/admin/updateUser/${userId}`)
+    }
+  } catch (error) {
+    console.log(error)
+  }
+} 
+
+const bannUser = async (req, res, next) => {
+
+  const bann = await User.updateOne(
+    { _id: req.params.id },
+    { $set: { isBanned: true } });
+  const banned = await User.findOne({ _id: req.params.id })
+  console.log("banned:", banned)
+  res.redirect('/admin')
+}
+
+
 module.exports = {
   dashboard,
   login,
   loginSubmit,
   logout,
   addUserGet,
-  addUserPost
+  addUserPost,
+  updateUserRender,
+  updateUserSubmit,
+  bannUser
 }
