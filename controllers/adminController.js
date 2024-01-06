@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt')
 
 //render dashboard
 let dashboard = async function (req, res, next) {
-  let userData = await User.find({isBanned :{$ne : true}})
+  let userData = await User.find({ isBanned: { $ne: true } })
   // console.log("user data:", userData);
   res.render('admin/dashboard', { title: 'Express', user: userData });
 }
@@ -105,7 +105,7 @@ const updateUserSubmit = async (req, res, next) => {
   } catch (error) {
     console.log(error)
   }
-} 
+}
 
 const bannUser = async (req, res, next) => {
 
@@ -117,6 +117,21 @@ const bannUser = async (req, res, next) => {
   res.redirect('/admin')
 }
 
+const search = async (req, res, next) => { 
+  try {
+    const {searchTerm} = req.body;
+    const searchResult = await User.find({ isBanned: { $ne: true } ,
+      $or:[
+        { name: { $regex: new RegExp(searchTerm, 'i') } },
+        { email: { $regex: new RegExp(searchTerm, 'i') } }
+      ]
+    })
+    console.log("search result:", searchResult)
+    res.render('admin/dashboard', { user: searchResult })
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 module.exports = {
   dashboard,
@@ -127,5 +142,6 @@ module.exports = {
   addUserPost,
   updateUserRender,
   updateUserSubmit,
-  bannUser
+  bannUser,
+  search
 }

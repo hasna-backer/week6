@@ -64,14 +64,28 @@
         </form>
         {{!-- <a href="/admin/logout">logout</a> --}}
         <h2 align="center" class="my-3">User Details</h2>
+         <div class="col ms-5">
+            <div class="row">
+                <div class="col">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                            <li class="breadcrumb-item active">View Users</li>
+                        </ol>
+                    </nav>
+                </div>
+                
+            </div>
+        </div>
         <div class="container mt-3">
 
             <div class="btn btn-toolbar mb-2 mb-md 0 justify-content-sm-end">
                 <form class="nav col-12 col-md-auto flex-fill  justify-content-center mb-md-0" role="search"
-                    method="POST" action="/search">
+                    method="POST" action="/admin/search">
                     <input type="search" name="searchTerm"
                         class="form-control form-control-dark w-100 rounded-0 border-0" placeholder="Search..."
                         aria-label="Search">
+                        </form>
                 </form>
                 <div class="btn-group me-2">
                     <a href="/admin/add" class="btn btn-sm btn-outline-secondary">Add User</a>
